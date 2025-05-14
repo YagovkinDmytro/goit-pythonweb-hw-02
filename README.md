@@ -1,21 +1,9 @@
-# ДЗ Тема: Основи технології Docker
+# Docker Technology Basics
 
-Створіть віртуальне оточення то встановіть необхідні бібліотеки
+Dockerfile created to create Docker image of application.
 
-```bash
-python -m venv env
-```
+Wrote docker-compose.yaml with configuration for application and PostgreSQL.
 
-```bash
-.\env\Scripts\activate
-```
+Used Docker Compose, docker-compose up command to build and run environment.
 
-```bash
-pip install -r requirements.txt
-```
-
-Запуск:
-
-```bash
-python main.py
-```
+Application is functional and database is available, which is confirmed by clicking on Check DB button.

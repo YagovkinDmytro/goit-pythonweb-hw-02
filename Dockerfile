@@ -1,21 +1,20 @@
-# Docker-команда FROM вказує базовий образ контейнера
-# Наш базовий образ - це Linux з попередньо встановленим python-3.10
-FROM python:3.10
+FROM python:3.10-slim
 
-# Встановимо змінну середовища
 ENV APP_HOME=/app
 
-# Встановимо робочу директорію всередині контейнера
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR $APP_HOME
 
-# Скопіюємо інші файли в робочу директорію контейнера
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Встановимо залежності всередині контейнера
-RUN pip install -r requirements.txt
+EXPOSE 8000
 
-# Позначимо порт, де працює застосунок всередині контейнера
-EXPOSE 5000
-
-# Запустимо наш застосунок всередині контейнера
-ENTRYPOINT ["python", "app.py"]
+CMD ["python", "main.py"]
