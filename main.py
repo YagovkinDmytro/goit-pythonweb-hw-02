@@ -1,6 +1,6 @@
 import os
+from dotenv import load_dotenv
 from pathlib import Path
-
 import uvicorn
 from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.responses import JSONResponse, HTMLResponse
@@ -8,8 +8,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-
 from conf.db import get_db
+
+load_dotenv()
+
+APP_PORT = os.getenv("APP_PORT")
 
 app = FastAPI()
 
@@ -43,4 +46,4 @@ def healthchecker(db: Session = Depends(get_db)):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8000)), log_level="info", reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get({APP_PORT}, 8000)), log_level="info", reload=True)
